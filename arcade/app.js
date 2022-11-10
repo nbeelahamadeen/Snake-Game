@@ -1,13 +1,14 @@
 let table = document.querySelector('#snakeBoard');
-let scoreDisplay = document.querySelector('#scoreDisplay');
+let score = document.querySelector('#scoreDisplay');
 
 //SNAKE components
 let snake = [[10 , 10]];
 let nextDirection = [1 , 0];
-let head = 0;
+let applePosition = 0;
+let points = 0;
 
 
-
+//creation of cellID
 for(let x = 0; x < 21; x++){
     let row = document.createElement('tr');
     table.appendChild(row);
@@ -41,7 +42,6 @@ function drawSnake(){
 function moveSnake(){    
 for(let i = 0; i < snake.length;i++){
          let body = snake[i];
-         console.log(body)
          let y = body[0];
          let x = body[1];
          let postion = y + "-" + x;
@@ -72,23 +72,14 @@ for(let i = 0; i < snake.length;i++){
         }
       }  
 
-//     changeDirection();
 
-// function changeDirection(){
-//     for(let i = 0; i < snake.length;i++){
-//     let snakePostition = snake[i];
-//        let x = snakePostition[0];
-//        let y = snakePostition[1];
-//        let head = x + "-" + y;
-//        console.log(head)
-//     }   
-// }
+
 
 setInterval(function(){
          moveSnake();
          drawSnake();
-         //changeDirection();
-    },300);
+         eatApple();
+    },500);
 
 
 
@@ -97,8 +88,24 @@ setInterval(function(){
 function randomApple(){
     let appleX = Math.ceil(Math.random() * 20);
     let appleY = Math.ceil(Math.random() * 20);
-    let postion = appleX + "-" + appleY;
-    if(snake !== postion){
-    document.getElementById(postion).classList.add('apple');
-    }
+    applePosition = appleX + "-" + appleY;
+    document.getElementById(applePosition).classList.add('apple');
+
+}
+
+function eatApple(){
+    for(let i = 0; i < snake.length;i++){
+    let snakePostition = snake[i];
+       let x = snakePostition[0];
+       let y = snakePostition[1];
+       let head = x + "-" + y;
+       console.log(head);
+       console.log(applePosition);
+       if(head === applePosition){
+        document.getElementById(head).classList.remove('apple');
+        points++;
+        score.innerText = "score "+ points;
+        randomApple()
+        }
+    }   
 }
