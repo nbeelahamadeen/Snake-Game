@@ -36,7 +36,9 @@ body{
     border: 5px yellowgreen;
     
 }
-
+#scoreDisplay{
+    font-size: 2rem;
+}
 .snake{
     background: silver;
 }
